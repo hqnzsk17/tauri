@@ -1,0 +1,56 @@
+{
+  "build": {
+    "beforeDevCommand": "yarn dev",
+    "beforeBuildCommand": "yarn build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist",
+    "withGlobalTauri": false
+  },
+  "package": {
+    "productName": "everest-check",
+    "version": "1.0.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": true,
+      "shell": {
+        "all": false,
+        "open": true
+      },
+      "fs": {
+        "all": true,
+        "scope": ["*","$DATA/*","$DESKTOP/*","$DESKTOP/**","$DOWNLOAD/*","$APPDATA/*","$APPDATA/**"]
+      }
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "everest",
+      "icon": [
+        "icons/myicon32.png",
+        "icons/myicon128.png",
+        "icons/myicon128.png",
+        "icons/myicon.icns",
+        "icons/myicon.ico"
+      ],
+      "windows": {
+        "webviewInstallMode": {
+          "type": "embedBootstrapper"
+        }
+      }
+    },
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "fullscreen": false,
+        "resizable": true,
+        "title": "陕西省技术服务中心-清点系统",
+        "width": 900,
+        "height": 600,
+        "theme": "Light"
+      }
+    ]
+  }
+}

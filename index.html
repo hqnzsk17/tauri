@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>清点系统</title>
+</head>
+
+<body style="margin: 0;">
+  <div id="app"></div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
+<script>
+  document.oncontextmenu = function () { return false; }
+
+  document.onkeydown = function (event) {
+    var e = event || window.event || arguments.callee.caller.arguments[0];
+    if (e && e.keyCode == 116) {
+      return false;
+    }
+  }
+  // "windows": {
+  //       "webviewInstallMode": {
+  //         "type": "fixedRuntime",
+  //         "path": "./Microsoft.WebView2.FixedVersionRuntime.117.0.2045.60.x64/"
+  //       }
+  //     }
+</script>
