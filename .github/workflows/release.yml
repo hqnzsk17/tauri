@@ -32,6 +32,8 @@ jobs:
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           tag_name: '${{ steps.get_version.outputs.VERSION }}'
           release_name: 'app ${{ steps.get_version.outputs.VERSION }}'
