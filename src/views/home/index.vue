@@ -4,7 +4,8 @@ import Mid from "./components/mid.vue";
 
 <template>
     <div style="background-image: url('/rectangle.png');background-size: cover;height: 100%;">
-        <img src="/logowhite.png" class="logo tauri" alt="Tauri logo" />
+        <div style="height: 80px;"></div>
+        <!-- <img src="/logowhite.png" class="logo tauri" alt="Tauri logo" /> -->
         <!-- <div class="row">
         <a href="https://tauri.app" target="_blank">
           <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />

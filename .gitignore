@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+src-tauri/Microsoft.WebView2.FixedVersionRuntime.117.0.2045.60.x64
 
 # Editor directories and files
 .vscode/*

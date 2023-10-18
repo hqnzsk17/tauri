@@ -132,7 +132,7 @@ const resetEvent: VxeFormEvents.Reset = () => {
   <div
     style="display: flex;justify-content: center;flex-direction: column;align-items: center;height: calc(100% - 180px);">
     <div style="margin-bottom: 10px;">
-      <h1>涉密设备清点建账系统</h1>
+      <h1>设备清点建账系统</h1>
       <h4>陕西省保密技术服务中心</h4>
     </div>
     <vxe-form

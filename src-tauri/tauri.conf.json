@@ -35,7 +35,7 @@
       ],
       "windows": {
         "webviewInstallMode": {
-          "type": "embedBootstrapper"
+          "type": "downloadBootstrapper"
         }
       }
     },
@@ -46,7 +46,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "陕西省技术服务中心-清点系统",
+        "title": "陕西省保密技术服务中心",
         "width": 900,
         "height": 600,
         "theme": "Light"
