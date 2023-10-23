@@ -27,13 +27,39 @@ const readFile = async () => {
     let res: any = await readTextFile('data.json', { dir: BaseDirectory.AppData });
     console.log('readFile', res)
     let data = JSON.parse(res)
-    console.log('data',data)
+    console.log('data', data)
     store.state.userInfo = data.userInfo;
     store.state.tableData = data.tableData;
-    if( data.userInfo){
+    if (data.userInfo) {
       formData.value = data.userInfo
     }
-    console.log('formData.value',formData.value)
+    console.log('formData.value', formData.value)
+  }
+
+  const isFileType = await exists(`typeData.json`, { dir: BaseDirectory.AppData })
+  if (isFileType) {
+    let res: any = await readTextFile('typeData.json', { dir: BaseDirectory.AppData });
+    console.log('readFile2', res)
+    let data = JSON.parse(res)
+    console.log('data2', data)
+    store.state.typeData = data;
+    console.log('store.state.typeData', store.state.typeData)
+    // store.state.tableData = data.tableData;
+    // if( data.userInfo){
+    //   formData.value = data.userInfo
+    // }
+  } else {
+    store.state.typeData = [
+      {
+        "cjqrdName": "硬盘"
+      },
+      {
+        "cjqrdName": "计算机"
+      },
+      {
+        "cjqrdName": "其它"
+      }
+    ];
   }
 }
 readFile()
@@ -55,7 +81,7 @@ const record: any = async () => {
     // 在这里处理二进制数据
     var fileArray = new Uint8Array(reader.result);
     console.log('fileArray', fileArray);
-    
+
     // const contents = await exists(`data.json`, { dir: BaseDirectory.AppData })
     // console.log('contents', contents)
     // if (contents) {
@@ -132,7 +158,7 @@ const resetEvent: VxeFormEvents.Reset = () => {
   <div
     style="display: flex;justify-content: center;flex-direction: column;align-items: center;height: calc(100% - 180px);">
     <div style="margin-bottom: 10px;">
-      <h1>设备清点建账系统</h1>
+      <h1>销毁设备资产管理系统</h1>
       <h4>陕西省保密技术服务中心</h4>
     </div>
     <vxe-form

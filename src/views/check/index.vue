@@ -4,17 +4,29 @@ import { useStore } from '@/store/index'
 import { ref } from "vue";
 import { VXETable, VxeFormInstance, VxeFormPropTypes, VxeFormEvents, VxeGridProps, VxeGridInstance, VxeButtonEvents } from 'vxe-table'
 import { reactive } from 'vue'
-import deviceJson from '@/assets/device.json'
+// import deviceJson from '@/assets/device.json'
 import { exists, writeBinaryFile, BaseDirectory } from '@tauri-apps/api/fs';
 // import { save } from '@tauri-apps/api/dialog';
 import { wordExport } from "./exportDocx";
-const deviceList: any = deviceJson.data
+// const deviceList: any = deviceJson.data
+// const deviceList: any = [
+//   {
+//     "cjqrdName": "硬盘"
+//   },
+//   {
+//     "cjqrdName": "计算机"
+//   },
+//   {
+//     "cjqrdName": "其它"
+//   }
+// ]
 // console.log('deviceList', deviceList)
 const store = useStore()
 const router = useRouter();
 const xGrid = ref<VxeGridInstance<RowVO>>()
 const sinput = ref()
 let storeData: any = store.state.userInfo
+let deviceList: any = store.state.typeData
 let btloading = false
 // const queryData:any = router.currentRoute.value.query
 // console.log('getstore=>',store.state.userInfo)
@@ -140,7 +152,30 @@ const submitEvent: VxeFormEvents.Submit = () => {
         sinput.value.focus()
       }
     }
-  }, 200)
+  }, 200);
+  //
+  let deviceName = formData.value.deviceName
+  console.log('deviceName', deviceName)
+  let len = deviceList.filter((item: any) => item.cjqrdName == deviceName).length
+  if (len < 1) {
+    console.log('没有')
+    deviceList.unshift({
+      "cjqrdName": deviceName
+    })
+    let sdata = JSON.stringify(deviceList, undefined, 4);
+    var blob = new Blob([sdata], { type: "text/json" });
+    let reader: any = new FileReader();
+    // let blob = res.blob;
+    reader.readAsArrayBuffer(blob);
+    // 设置FileReader对象的onloadend属性
+    reader.onloadend = async function () {
+      // 在这里处理二进制数据
+      var fileArray = new Uint8Array(reader.result);
+      await writeBinaryFile({ path: `typeData.json`, contents: fileArray }, { dir: BaseDirectory.AppData });
+    }
+  } else {
+    console.log('有')
+  }
 }
 
 const resetEvent: VxeFormEvents.Reset = () => {
@@ -242,7 +277,7 @@ const dctaizhang = async () => {
     let index = arr.findIndex((item: any) => item.deviceName == obj.deviceName && item.securityClass == obj.securityClass)
     if (index > -1) {
       arr[index].specifications = parseInt(arr[index].specifications) + parseInt(obj.specifications)
-    }else{
+    } else {
       arr.push(obj)
     }
   }
@@ -256,7 +291,7 @@ const dctaizhang = async () => {
     "phone": storeData.phone,
     "tableList": newdata
   }
-  wordExport(list,'总台账')
+  wordExport(list, '总台账')
 }
 
 const saveInfo = async () => {
@@ -302,7 +337,7 @@ const exportDataEvent: VxeButtonEvents.Click = async () => {
         "phone": storeData.phone,
         "tableList": gridData
       }
-      wordExport(list,'明细')
+      wordExport(list, '明细')
       // let res = await $grid.exportData({ type: 'csv', isHeader: true, download: false });
       // console.log('res', res)
       // let reader: any = new FileReader();
@@ -350,7 +385,7 @@ const exportDataEvent: VxeButtonEvents.Click = async () => {
 </script>
 <template>
   <div style="padding-bottom: 50px;">
-    <div class="title">涉密设备清点建账系统</div>
+    <div class="title">销毁设备资产管理系统</div>
     <div class="top-box">
       <div class="t-title">
         <span class="t-left">{{ storeData.unitName }}</span>
@@ -362,14 +397,14 @@ const exportDataEvent: VxeButtonEvents.Click = async () => {
         <vxe-form style="border-radius: 8px;" title-colon ref="formRef" title-align="right" title-width="85"
           :data="formData" :rules="formRules" :loading="loading" @submit="submitEvent" @reset="resetEvent">
           <vxe-form-gather span="24">
-            <vxe-form-item title="清点设备" field="deviceName" span="6" :item-render="{}" title-overflow="title">
+            <vxe-form-item title="设备类型" field="deviceName" span="6" :item-render="{}" title-overflow="title">
               <vxe-pulldown v-model="showPull" style="width: 100%;">
                 <template #default>
-                  <vxe-input v-model="formData.deviceName" placeholder="下拉框" @focus="focusEvent"></vxe-input>
+                  <vxe-input v-model="formData.deviceName" placeholder="请选择或输入" @focus="focusEvent"></vxe-input>
                 </template>
                 <template #dropdown>
                   <div class="my-dropdown1">
-                    <div class="list-item1" v-for="item in deviceList" :key="item.id" @click="selectEvent(item)">
+                    <div class="list-item1" v-for="item in deviceList" :key="item.cjqrdName" @click="selectEvent(item)">
                       <!-- <i class="vxe-icon-user-fill"></i> -->
                       <span>{{ item.cjqrdName }}</span>
                     </div>
@@ -393,7 +428,8 @@ const exportDataEvent: VxeButtonEvents.Click = async () => {
             </vxe-form-item>
             <vxe-form-item title="设备数量" field="specifications" span="6" :item-render="{}" title-overflow="title">
               <template #default="params">
-                <vxe-input type="number" v-model="params.data.specifications" placeholder="" @change="changeEvent(params)"></vxe-input>
+                <vxe-input type="number" v-model="params.data.specifications" placeholder=""
+                  @change="changeEvent(params)"></vxe-input>
               </template>
             </vxe-form-item>
             <vxe-form-item title="品牌型号" field="brandModel" span="6" :item-render="{}" title-overflow="title">
@@ -448,11 +484,12 @@ const exportDataEvent: VxeButtonEvents.Click = async () => {
 </template>
 <style scoped lang="less">
 .my-dropdown1 {
-  height: 200px;
+  max-height: 200px;
   overflow: auto;
   border-radius: 4px;
   border: 1px solid #dcdfe6;
   background-color: #fff;
+  padding-left: 10px;
 }
 
 .list-item1:hover {

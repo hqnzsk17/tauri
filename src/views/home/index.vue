@@ -13,7 +13,7 @@ import Mid from "./components/mid.vue";
       </div> -->
         <Mid />
         <div style="padding-bottom: 10px;">
-            <h6 class="bt">技术支撑：西安以为电子科技有限公司<span style="margin-left: 10px;">客户端版本：V1.0.0</span></h6>
+            <h6 class="bt">陕西省保密技术服务中心监制<span style="margin-left: 10px;">客户端版本：V1.0.0</span></h6>
         </div>
     </div>
 </template>

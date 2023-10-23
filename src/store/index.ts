@@ -3,7 +3,8 @@ import { createStore, useStore as baseUseStore, Store } from 'vuex'
 
 export interface State {
     userInfo: object,
-    tableData: string[]
+    tableData: object[],
+    typeData: object[]
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -11,7 +12,8 @@ export const key: InjectionKey<Store<State>> = Symbol()
 export const store = createStore<State>({
     state: {
         userInfo: {},
-        tableData: []
+        tableData: [],
+        typeData: []
     }
 })
 
