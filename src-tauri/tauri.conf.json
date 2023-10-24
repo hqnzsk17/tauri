@@ -32,12 +32,7 @@
         "icons/myicon128.png",
         "icons/myicon.icns",
         "icons/myicon.ico"
-      ],
-      "windows": {
-        "webviewInstallMode": {
-          "type": "embedBootstrapper"
-        }
-      }
+      ]
     },
     "security": {
       "csp": null
